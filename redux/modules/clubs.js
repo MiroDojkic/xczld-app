@@ -2,12 +2,12 @@ import expand from '../expand';
 import { dataRetentionThreshold } from '../../config';
 
 const initialState = {
-  races: [],
+  clubs: [],
   loadedAt: false,
   loading: false
 };
 
-const { LOAD, LOAD_SUCCESS, LOAD_FAIL } = expand('races');
+const { LOAD, LOAD_SUCCESS, LOAD_FAIL } = expand('clubs');
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         loadedAt: Date.now(),
-        races: action.result
+        clubs: action.result
       };
     case LOAD_FAIL:
       return {
@@ -35,12 +35,12 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-const isLoaded = ({ races }) =>
-  races && races.loaded && Date.now() - races.loaded > dataRetentionThreshold;
+const isLoaded = ({ clubs }) =>
+  clubs && clubs.loaded && Date.now() - clubs.loaded > dataRetentionThreshold;
 
 export const load = () => ({
   types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-  promise: client => client.get('races.json')
+  promise: client => client.get('clubs.json')
 });
 
 export const initialLoad = () => (dispatch, getState) =>

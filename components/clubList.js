@@ -4,36 +4,36 @@ import { FlatList, View } from 'react-native';
 import { List, ListItem, Text } from 'react-native-elements';
 import type { NavigationNavigatorProps } from 'react-navigation';
 import connect from '../redux/connect';
-import * as actions from '../redux/modules/races';
-import { getIsLoading, getRaces } from '../redux/selectors/races';
+import * as actions from '../redux/modules/clubs';
+import { getIsLoading, getClubs } from '../redux/selectors/clubs';
+import noop from '../utils/noop';
 
-type Race = {
-  id: number,
+type Club = {
   name: string,
-  date: string,
-  ended_at: string
+  points: number,
+  racers_count: number
 };
 
 type Info = {
-  item: Race
+  item: Club
 };
 
 type Props = {
   load: () => mixed,
   initialLoad: () => mixed,
-  races: Race[],
+  clubs: Club[],
   isLoading: boolean,
   navigation: NavigationNavigatorProps
 };
 
 type DefaultProps = {
-  races: [],
+  clubs: [],
   isLoading: boolean
 };
 
 @connect(
   {
-    races: getRaces,
+    clubs: getClubs,
     isLoading: getIsLoading
   },
   {
@@ -41,10 +41,11 @@ type DefaultProps = {
     initialLoad: actions.initialLoad
   }
 )
-class RaceList extends PureComponent<DefaultProps, Props, void> {
+class ClubList extends PureComponent<DefaultProps, Props, void> {
   static defaultProps = {
-    races: [],
-    isLoading: false
+    clubs: [],
+    isLoading: false,
+    load: noop
   };
 
   componentDidMount() {
@@ -54,24 +55,23 @@ class RaceList extends PureComponent<DefaultProps, Props, void> {
   renderItem = ({ item }: Info) => (
     <ListItem
       title={`${item.name}`}
-      subtitle={new Date(item.date).toLocaleString()}
-      rightTitle={item.ended_at ? 'Zavrsena' : 'Nadolazeca'}
-      onPress={() =>
-        this.props.navigation.navigate('Race', { raceId: item.id })}
+      rightTitle={`${item.points} Bodova`}
+      rightTitleStyle={styles.rightTitle}
+      subtitle={`Broj članova: ${item.racers_count}`}
     />
   );
 
   render() {
-    const { races, load, isLoading } = this.props;
+    const { clubs, load, isLoading } = this.props;
 
     return (
       <View>
-        <List {...{ style }}>
+        <List style={styles.list}>
           <FlatList
             keyExtractor={({ id }) => id}
             renderItem={this.renderItem}
-            data={races}
-            ListEmptyComponent={<Text> Ucitavam utrke </Text>}
+            data={clubs}
+            ListEmptyComponent={<Text> Nema podataka </Text>}
             onRefresh={load}
             refreshing={!!isLoading}
           />
@@ -81,8 +81,13 @@ class RaceList extends PureComponent<DefaultProps, Props, void> {
   }
 }
 
-export default RaceList;
+export default ClubList;
 
-const style = {
-  height: '100%'
+const styles = {
+  list: {
+    height: '100%'
+  },
+  rightTitle: {
+    color: '#ff5252'
+  }
 };

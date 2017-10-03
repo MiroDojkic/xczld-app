@@ -1,14 +1,17 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import client from '../utils/apiClient';
+import { createLogger } from 'redux-logger';
+import rootReducer from './modules/root';
 import apiMiddleware from './middlewares/apiMiddleware';
-import appNavigation from './modules/appNavigation';
-import races from './modules/races';
+import client from '../utils/apiClient';
 
-const reducer = combineReducers({ appNavigation, races });
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk, apiMiddleware(client))
-);
+const middlewares = [thunk, apiMiddleware(client)];
+
+if (__DEV__) {
+  const logger = createLogger();
+  middlewares.unshift(logger);
+}
+
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 export default store;

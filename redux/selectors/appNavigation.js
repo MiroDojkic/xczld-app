@@ -1,3 +1,1 @@
-const getNav = ({ appNavigation }) => appNavigation;
-
-export { getNav };
+export const getNav = ({ appNavigation }) => appNavigation;

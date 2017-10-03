@@ -1,5 +1,7 @@
+import { apiUrl } from '../config';
+
 const client = () => {
-  const url = 'http://xczld.herokuapp.com/';
+  const url = apiUrl;
 
   return {
     get: path => fetch(`${url}${path}`).then(response => response.json()),
