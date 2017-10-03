@@ -1,39 +1,36 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { StackNavigator } from 'react-navigation';
-import { Header, Text } from 'react-native-elements';
+import { addNavigationHelpers } from 'react-navigation';
 
+import connect from './redux/connect';
 import store from './redux/store';
-import RaceList from './components/raceList';
-import RaceDetails from './components/raceDetails';
+import Navigator from './components/navigator';
+import { getNav } from './redux/selectors/navigation';
 
-const navigationOptions = {
-  header: () => (
-    <Header
-      centerComponent={
-        <Text h2 style={{ color: '#fff' }}>
-          {' '}
-          XCZLD{' '}
-        </Text>
-      }
-      backgroundColor="#009688"
-    />
-  )
-};
+@connect({ state: getNav })
+class AppWithNavigationState extends Component {
+  render() {
+    const { dispatch, state } = this.props;
 
-const Navigator = StackNavigator({
-  Home: { screen: RaceList, navigationOptions },
-  Race: { screen: RaceDetails, navigationOptions }
-});
+    return (
+      <Navigator
+        navigation={addNavigationHelpers({
+          dispatch,
+          state
+        })}
+      />
+    );
+  }
+}
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <Navigator />
-    </Provider>
-  );
-};
-
-export default App;
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppWithNavigationState />
+      </Provider>
+    );
+  }
+}
