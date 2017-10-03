@@ -45,7 +45,6 @@ class ClubList extends PureComponent<DefaultProps, Props, void> {
   static defaultProps = {
     clubs: [],
     isLoading: false,
-    load: noop
   };
 
   componentDidMount() {
