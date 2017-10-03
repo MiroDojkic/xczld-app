@@ -18,7 +18,7 @@ const navigationOptions = {
   )
 };
 
-const Navigator = StackNavigator(
+const AppNavigator = StackNavigator(
   {
     Home: { screen: RaceList, navigationOptions },
     Race: { screen: RaceDetails, navigationOptions }
@@ -28,4 +28,4 @@ const Navigator = StackNavigator(
   }
 );
 
-export default Navigator;
+export default AppNavigator;

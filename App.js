@@ -6,8 +6,8 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import connect from './redux/connect';
 import store from './redux/store';
-import Navigator from './components/navigator';
-import { getNav } from './redux/selectors/navigation';
+import AppNavigator from './components/AppNavigator';
+import { getNav } from './redux/selectors/appNavigation';
 
 @connect({ state: getNav })
 class AppWithNavigationState extends Component {
@@ -15,7 +15,7 @@ class AppWithNavigationState extends Component {
     const { dispatch, state } = this.props;
 
     return (
-      <Navigator
+      <AppNavigator
         navigation={addNavigationHelpers({
           dispatch,
           state
