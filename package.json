@@ -7,7 +7,9 @@
     "eslint": "^4.8.0",
     "file-loader": "^0.11.2",
     "flow-bin": "^0.49.1",
+    "husky": "^0.14.3",
     "jest-expo": "^21.0.2",
+    "lint-staged": "^4.2.3",
     "react-native-scripts": "1.5.0",
     "react-test-renderer": "16.0.0-alpha.12"
   },
@@ -18,7 +20,22 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
-    "flow": "flow"
+    "flow": "flow",
+    "precommit": "lint-staged"
+  },
+  "prettier": {
+    "useTabs": false,
+    "tabWidth": 2,
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run flow",
+      "npm run lint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "preset": "jest-expo"
