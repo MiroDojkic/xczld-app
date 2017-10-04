@@ -6,7 +6,6 @@ import type { NavigationNavigatorProps } from 'react-navigation';
 import connect from '../redux/connect';
 import * as actions from '../redux/modules/clubs';
 import { getIsLoading, getClubs } from '../redux/selectors/clubs';
-import noop from '../utils/noop';
 
 type Club = {
   name: string,
