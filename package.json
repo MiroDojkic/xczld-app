@@ -21,6 +21,8 @@
     "ios": "react-native-scripts ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
     "flow": "flow",
+    "lint": "node_modules/.bin/eslint -c .eslintrc . -f table",
+    "lint:fix": "node_modules/.bin/eslint -c .eslintrc . -f table --fix",
     "precommit": "lint-staged"
   },
   "prettier": {
@@ -33,7 +35,7 @@
   "lint-staged": {
     "*.js": [
       "npm run flow",
-      "npm run lint --fix",
+      "npm run lint:fix",
       "git add"
     ]
   },
