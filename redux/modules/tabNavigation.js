@@ -1,11 +1,11 @@
-import TabNavigator from '../../components/TabNavigator';
+import HomeTabNavigator from '../../components/HomeTabNavigator';
 
-const initialState = TabNavigator.router.getStateForAction(
-  TabNavigator.router.getActionForPathAndParams('Utrke')
+const initialState = HomeTabNavigator.router.getStateForAction(
+  HomeTabNavigator.router.getActionForPathAndParams('Utrke')
 );
 
 const reducer = (state = initialState, action) => {
-  const nextState = TabNavigator.router.getStateForAction(action, state);
+  const nextState = HomeTabNavigator.router.getStateForAction(action, state);
 
   return nextState || state;
 };
